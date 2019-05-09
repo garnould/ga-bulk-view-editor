@@ -9,13 +9,13 @@
     <div class="sidebar branding-below">
 
       <div id="before-error"></div>
-      
+
       <form>
         <div class="block form-group">
            <label for="prefs-accountList"><b>Process only the following accounts</b><br />(comma separated list: XX,YY,...)</label>
            <input id="prefs-accountList" type="text" value="Loading..." />
         </div>
-      
+
         <div class="block">
           <hr />
         </div>
@@ -39,9 +39,9 @@
     // Run initial scripts onLoad.
     $(function() {
        console.log("preferences.html: displayed") ;
-    
+
        google.script.run.withSuccessHandler(initializePrefsValues).withFailureHandler(showError).getPreferences();
-       
+
        $('#prefs-cancel').click(closePreferences);
        $('#prefs-apply').click(applyPreferences);
     });
@@ -49,7 +49,7 @@
     // Helpers
     function initializePrefsValues(prefs) {
        $('#prefs-accountList').val(prefs['accountList'].join(', ')) ;
-       
+
        $("#prefs-apply").prop("disabled", false);
     }
 
@@ -57,15 +57,15 @@
     function closePreferences() {
        google.script.host.close();
     }
-    
+
     function applyPreferences(e) {
        e.preventDefault();
        $("#prefs-apply").prop("disabled", true);
-    
+
        // accountList
-    
+
        accountList = $('#prefs-accountList').val() ;
-       
+
        if ( (/^\s*\d+(?:\s*,\s*\d+\s*)*$/.exec(accountList) === null) && (/^\s*$/.exec(accountList) === null) ) {
           showError("Invalid accountList format", $('div#before-error'));
           $("#prefs-apply").prop("disabled", false);
@@ -73,7 +73,7 @@
        }
 
        accountList = accountList.split(/,/) ;
-       
+
        for (var loop=0; loop<accountList.length; ++loop) {
           accountList[loop] = accountList[loop].replace(/\s*/g, '') ;
        }

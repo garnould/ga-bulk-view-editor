@@ -21,6 +21,8 @@ function getOrCreateSheetByName(name, headers, clear){
     sheet = createSheet(name);
   }
 
+  ss.setActiveSheet(sheet) ;
+
   // Clear sheet if true
   if (clear) {
     sheet.clear();
